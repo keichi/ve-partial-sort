@@ -42,6 +42,7 @@ void countsrt_vec(int n, uint32_t *v, uint32_t *r, int bits, int pos,
     /* histogram keys */
     for (i = 0; i < stride; i++) {
 #pragma _NEC ivdep
+#pragma ivdep
         for (j = i, k = 0; j < MIN(i + VLEN * stride, n); j += stride, k++) {
             digit = (v[j] & mask) >> shift;
             bucket[digit][k] += 1;
@@ -60,6 +61,7 @@ void countsrt_vec(int n, uint32_t *v, uint32_t *r, int bits, int pos,
     for (i = 0; i < stride; i++) {
         for (j = i, k = 0; j < MIN(i + VLEN * stride, n); j += stride, k++) {
 #pragma _NEC ivdep
+#pragma ivdep
             digit = (v[j] & mask) >> shift;
             m = bucket[digit][k];
             r[m] = v[j];

@@ -34,6 +34,7 @@ void radix_partial_sort(uint32_t *v, uint32_t *w, uint32_t *ix, uint32_t *ixw,
     for (int i = 0; i < nb * VLEN; i++) ((int *)bucket)[i] = 0;
 
 #pragma _NEC ivdep
+#pragma ivdep
     for (int i = lo; i < hi; i++) {
         uint32_t digit = (v[i] & mask) >> shift;
         bucket[digit][i % VLEN] += 1;
@@ -47,6 +48,7 @@ void radix_partial_sort(uint32_t *v, uint32_t *w, uint32_t *ix, uint32_t *ixw,
     }
 
 #pragma _NEC ivdep
+#pragma ivdep
     for (int i = lo; i < hi; i++) {
         uint32_t digit = (v[i] & mask) >> shift;
         int m = bucket[digit][i % VLEN];
@@ -56,6 +58,7 @@ void radix_partial_sort(uint32_t *v, uint32_t *w, uint32_t *ix, uint32_t *ixw,
     }
 
 #pragma _NEC ivdep
+#pragma ivdep
     for (int i = lo; i < hi; i++) {
         v[i] = w[i];
         ixw[i] = ix[i];
@@ -67,7 +70,7 @@ void radix_partial_sort(uint32_t *v, uint32_t *w, uint32_t *ix, uint32_t *ixw,
 
         if (start + lo >= k) break;
         if (end - start <= 1) continue;
-        if (end - start < 128) {
+        if (end - start < 64) {
             for (int j = start + lo + 1; j < end + lo; j++) {
                 int key = v[j];
                 int k = j - 1;
@@ -131,7 +134,7 @@ int main()
                     reinterpret_cast<uint32_t *>(distances_work.data()),
                     reinterpret_cast<uint32_t *>(indices.data()),
                     reinterpret_cast<uint32_t *>(indices_work.data()), 0, n, k,
-                    4, 7);
+                    8, 3);
 
                 timer.stop();
 #ifdef _FTRACE

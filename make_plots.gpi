@@ -25,11 +25,11 @@ set ylabel "Runtime [ms]"
 
 set output "n_var_k_1.pdf"
 
-plot "performance.csv" every 8 using 1:5 with lp ls 3 title "STL full sort", \
-                    "" every 8 using 1:6 with lp ls 4 title "STL partial sort", \
-                    "" every 8 using 1:3 with lp ls 1 title "ASL full sort", \
-                    "" every 8 using 1:4 with lp ls 2 title "LSD radix full sort", \
-                    "" every 8 using 1:7 with lp ls 5 title "MSD radix partial sort"
+plot "perf_ve20.csv" every 8 using 1:5 with lp ls 3 title "STL full sort", \
+                  "" every 8 using 1:6 with lp ls 4 title "STL partial sort", \
+                  "" every 8 using 1:3 with lp ls 1 title "ASL full sort", \
+                  "" every 8 using 1:4 with lp ls 2 title "LSD radix full sort", \
+                  "" every 8 using 1:7 with lp ls 5 title "MSD radix partial sort"
 
 set logscale x
 set xlabel "Number of neighbors"
@@ -38,18 +38,35 @@ set yrange [*:2]
 
 set output "n_10k_k_var.pdf"
 
-plot "performance.csv" every ::22::28 using 2:5 with lp ls 3 title "STL full sort", \
-                    "" every ::22::28 using 2:3 with lp ls 1 title "ASL full sort", \
-                    "" every ::22::28 using 2:4 with lp ls 2 title "LSD radix full sort", \
-                    "" every ::22::28 using 2:6 with lp ls 4 title "STL partial sort", \
-                    "" every ::22::28 using 2:7 with lp ls 5 title "MSD radix partial sort"
+plot "perf_ve20.csv" every ::22::28 using 2:5 with lp ls 3 title "STL full sort", \
+                  "" every ::22::28 using 2:3 with lp ls 1 title "ASL full sort", \
+                  "" every ::22::28 using 2:4 with lp ls 2 title "LSD radix full sort", \
+                  "" every ::22::28 using 2:6 with lp ls 4 title "STL partial sort", \
+                  "" every ::22::28 using 2:7 with lp ls 5 title "MSD radix partial sort"
 
 set yrange [*:*]
 
 set output "n_1m_k_var.pdf"
 
-plot "performance.csv" every ::64::70 using 2:5 with lp ls 3 title "STL full sort", \
-                    "" every ::64::70 using 2:3 with lp ls 1 title "ASL full sort", \
-                    "" every ::64::70 using 2:4 with lp ls 2 title "LSD radix full sort", \
-                    "" every ::64::70 using 2:6 with lp ls 4 title "STL partial sort", \
-                    "" every ::64::70 using 2:7 with lp ls 5 title "MSD radix partial sort"
+plot "perf_ve20.csv" every ::64::70 using 2:5 with lp ls 3 title "STL full sort", \
+                  "" every ::64::70 using 2:3 with lp ls 1 title "ASL full sort", \
+                  "" every ::64::70 using 2:4 with lp ls 2 title "LSD radix full sort", \
+                  "" every ::64::70 using 2:6 with lp ls 4 title "STL partial sort", \
+                  "" every ::64::70 using 2:7 with lp ls 5 title "MSD radix partial sort"
+
+set logscale xy
+set xlabel "Length of vector"
+set ylabel "Runtime [ms]"
+
+set output "n_var_k_1_ve_vs_xeon.pdf"
+
+plot "perf_ve20.csv" every 8 using 1:5 with lp ls  3 title "STL full sort (VE)", \
+                  "" every 8 using 1:6 with lp ls  4 title "STL partial sort (VE)", \
+                  "" every 8 using 1:3 with lp ls  1 title "ASL full sort (VE)", \
+                  "" every 8 using 1:4 with lp ls  2 title "LSD radix full sort (VE)", \
+                  "" every 8 using 1:7 with lp ls  5 title "MSD radix partial sort (VE)", \
+     "perf_xeon.csv" every 8 using 1:4 with lp ls  6 title "STL full sort (Xeon)", \
+                  "" every 8 using 1:5 with lp ls  7 title "STL partial sort (Xeon)", \
+                  "" every 8 using 1:3 with lp ls  9 title "LSD radix full sort (Xeon)", \
+                  "" every 8 using 1:6 with lp ls 10 title "MSD radix partial sort (Xeon)"
+unset output
